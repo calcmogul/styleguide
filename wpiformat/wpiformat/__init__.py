@@ -8,6 +8,7 @@ import subprocess
 import sys
 
 from wpiformat.bracecomment import BraceComment
+from wpiformat.cast import Cast
 from wpiformat.cidentlist import CIdentList
 from wpiformat.clangformat import ClangFormat
 from wpiformat.clangtidy import ClangTidy
@@ -529,6 +530,7 @@ def main():
             Whitespace(),
             ClangFormat(args.clang_version),
             Jni(),  # Fixes clang-format formatting
+            Cast(),
         ]
         run_pipeline(task_pipeline, args, files)
 
