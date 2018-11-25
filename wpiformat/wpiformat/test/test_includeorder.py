@@ -546,4 +546,20 @@ def test_includeorder():
         "#endif" + os.linesep)
     test.add_latest_input_as_output(True)
 
+    # Ensure #ifndef is handled properly
+    test.add_input("./Test.h",
+        "#ifndef __APPLE__" + os.linesep + \
+        "#include <util.h>" + os.linesep + \
+        "#elif !defined(_WIN32)" + os.linesep + \
+        "#include <pty.h>" + os.linesep + \
+        "#endif" + os.linesep)
+    test.add_latest_input_as_output(True)
+
+    # Ensure #ifndef is handled properly
+    test.add_input("./Test.h",
+        "#ifndef _WIN32" + os.linesep + \
+        "#include <pty.h>" + os.linesep + \
+        "#endif" + os.linesep)
+    test.add_latest_input_as_output(True)
+
     test.run(OutputType.FILE)
