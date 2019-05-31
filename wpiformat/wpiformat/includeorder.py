@@ -263,6 +263,7 @@ class IncludeOrder(PipelineTask):
 
         i = start
         while i < end:
+            print("lines_list[i]=", lines_list[i])
             if "#ifdef" in lines_list[i]:
                 ifdef_count = 1
                 for j in range(i + 1, end):

@@ -950,4 +950,38 @@ def test_includeorder():
     )
     test.add_latest_input_as_output(True)
 
+    test.add_input(
+        "./Test.h",
+        "#ifdef __cplusplus1"
+        + os.linesep
+        + '#include "cscore_oo.h"'
+        + os.linesep
+        + "#endif"
+        + os.linesep
+        + os.linesep
+        + "#ifdef __cplusplus2"
+        + os.linesep
+        + 'extern "C" {'
+        + os.linesep
+        + "#endif"
+        + os.linesep,
+    )
+    test.add_output(
+        "#ifdef __cplusplus1"
+        + os.linesep
+        + 'extern "C" {'
+        + os.linesep
+        + "#endif"
+        + os.linesep
+        + os.linesep
+        + "#ifdef __cplusplus2"
+        + os.linesep
+        + '#include "cscore_oo.h"'
+        + os.linesep
+        + "#endif"
+        + os.linesep,
+        True,
+        True,
+    )
+
     test.run(OutputType.FILE)
