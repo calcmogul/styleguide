@@ -16,6 +16,9 @@ class GTestName(PipelineTask):
         output = ""
         success = True
 
+        # List of tuples containing old and new test suite name
+        test_suite_renames = []
+
         test_name_rgx = regex.compile(
             r"\b(?P<test_type>TEST(_F|_P)?)\((?P<whitespace>\s*)(?P<test_suite>\w+), (?P<test_case>\w+)\)"
         )
@@ -34,10 +37,13 @@ class GTestName(PipelineTask):
                 output += match.group("whitespace")
 
             # Fix test suite name
+            old_test_suite = test_suite
             if test_suite.endswith("Tests"):
                 test_suite = test_suite[:-1]
             if not test_suite.endswith("Test"):
                 test_suite += "Test"
+            if old_test_suite != test_suite:
+                test_suite_renames.append((old_test_suite, test_suite))
 
             # Write test suite name
             output += test_suite
@@ -53,6 +59,8 @@ class GTestName(PipelineTask):
                     test_case = test_case[:-4]
                 if test_case.endswith("Tests"):
                     test_case = test_case[:-5]
+            if test_case.startswith("Test") or test_case.startswith("test"):
+                test_case = test_case[4:]
 
             # Write test case name
             output += ", " + test_case + ")"
@@ -82,19 +90,31 @@ class GTestName(PipelineTask):
                 output += match.group("whitespace")
 
             # Fix test suite name
+            old_test_suite = test_suite
             if test_suite.endswith("Test"):
                 test_suite += "s"
             if not test_suite.endswith("Tests"):
                 test_suite += "Tests"
+            if old_test_suite != test_suite:
+                test_suite_renames.append((old_test_suite, test_suite))
 
             # Write test suite name
             output += test_suite
 
             # Fix test case name
+            # TODO: Add NOLINT support since TimedRobot has a "TestMode" test
+            # case
+            # linenum = lines.count(linesep, 0, match.start()) + 1
+            # if "NOLINT" not in lines.splitlines()[linenum - 1]:
+            #     format_succeeded = False
+            #     print(name + ": " + str(linenum) + ": '" + token + \
+            #           "' in global namespace")
             if test_case.endswith("Tests"):
                 test_case = test_case[:-1]
             if not test_case.endswith("Test"):
                 test_case += "Test"
+            if test_case.startswith("Test") or test_case.startswith("test"):
+                test_case = test_case[4:]
 
             # Write test case name
             output += ", " + test_case
@@ -104,5 +124,10 @@ class GTestName(PipelineTask):
         # If input has unprocessed lines, write them to output
         if extract_location < len(lines):
             output += lines[extract_location:]
+
+        # If test suites for fixtures or parameterized tests were renamed,
+        # rename the corresponding classes too
+        for rename in test_suite_renames:
+            output = regex.sub(f"class {rename[0]}", f"class {rename[1]}", output)
 
         return output, success
