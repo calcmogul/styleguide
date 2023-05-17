@@ -3,7 +3,7 @@
 import subprocess
 import sys
 
-from wpiformat.task import Task
+from .task import Task
 
 
 class ClangTidy(Task):

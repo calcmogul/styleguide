@@ -2,12 +2,12 @@
 
 from datetime import date
 import os
-import regex
 import subprocess
-import sys
 
-from wpiformat.config import Config
-from wpiformat.task import Task
+import regex
+
+from .config import Config
+from .task import Task
 
 
 class LicenseUpdate(Task):

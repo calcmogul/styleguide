@@ -7,25 +7,25 @@ import os
 import subprocess
 import sys
 
-from wpiformat.bracecomment import BraceComment
-from wpiformat.cidentlist import CIdentList
-from wpiformat.clangformat import ClangFormat
-from wpiformat.clangtidy import ClangTidy
-from wpiformat.config import Config
-from wpiformat.eofnewline import EofNewline
-from wpiformat.gtestname import GTestName
-from wpiformat.includeguard import IncludeGuard
-from wpiformat.includeorder import IncludeOrder
-from wpiformat.javaclass import JavaClass
-from wpiformat.jni import Jni
-from wpiformat.licenseupdate import LicenseUpdate
-from wpiformat.lint import Lint
-from wpiformat.pyformat import PyFormat
-from wpiformat.stdlib import Stdlib
-from wpiformat.task import Task
-from wpiformat.usingdeclaration import UsingDeclaration
-from wpiformat.usingnamespacestd import UsingNamespaceStd
-from wpiformat.whitespace import Whitespace
+from .bracecomment import BraceComment
+from .cidentlist import CIdentList
+from .clangformat import ClangFormat
+from .clangtidy import ClangTidy
+from .config import Config
+from .eofnewline import EofNewline
+from .gtestname import GTestName
+from .includeguard import IncludeGuard
+from .includeorder import IncludeOrder
+from .javaclass import JavaClass
+from .jni import Jni
+from .licenseupdate import LicenseUpdate
+from .lint import Lint
+from .pyformat import PyFormat
+from .stdlib import Stdlib
+from .task import Task
+from .usingdeclaration import UsingDeclaration
+from .usingnamespacestd import UsingNamespaceStd
+from .whitespace import Whitespace
 
 
 def filter_ignored_files(names):

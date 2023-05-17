@@ -4,7 +4,7 @@ and assert.h are exceptions.
 
 import regex
 
-from wpiformat.task import Task
+from .task import Task
 
 
 class Header:

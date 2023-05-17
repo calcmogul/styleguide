@@ -4,7 +4,7 @@ namespace declarations matches that of the declaration name.
 
 import regex
 
-from wpiformat.task import Task
+from .task import Task
 
 
 class BraceComment(Task):

@@ -1,6 +1,6 @@
 """This task ensures that the file has exactly one EOF newline."""
 
-from wpiformat.task import Task
+from .task import Task
 
 
 class EofNewline(Task):

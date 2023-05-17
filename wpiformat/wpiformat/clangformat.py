@@ -3,7 +3,7 @@
 from subprocess import Popen, PIPE
 import sys
 
-from wpiformat.task import Task
+from .task import Task
 
 
 class ClangFormat(Task):

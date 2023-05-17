@@ -2,11 +2,11 @@
 style guide.
 """
 
+from enum import Enum
 import os
 import regex
 
-from enum import Enum
-from wpiformat.task import Task
+from .task import Task
 
 
 class State(Enum):

@@ -21,7 +21,7 @@ automatically generated based on the function's return type and arguments.
 
 import regex
 
-from wpiformat.task import Task
+from .task import Task
 
 
 class Jni(Task):

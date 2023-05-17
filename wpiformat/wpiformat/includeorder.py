@@ -3,7 +3,7 @@
 import os
 import regex
 
-from wpiformat.task import Task
+from .task import Task
 
 
 class IncludeOrder(Task):

@@ -1,8 +1,6 @@
 """This task removes trailing whitespace from the file."""
 
-import os
-
-from wpiformat.task import Task
+from .task import Task
 
 
 class Whitespace(Task):

@@ -11,8 +11,8 @@ required it to be used as a module.
 import os
 import sys
 
-from wpiformat import cpplint
-from wpiformat.task import Task
+from .cpplint import main
+from .task import Task
 
 
 class Lint(Task):
@@ -48,7 +48,7 @@ class Lint(Task):
 
         # Run cpplint.py
         try:
-            cpplint.main()
+            main()
         except SystemExit as e:
             # Restore original arguments
             sys.argv = saved_argv

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
 
-import wpiformat
+from . import main
 
-wpiformat.main()
+main()
