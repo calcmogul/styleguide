@@ -73,12 +73,13 @@ class IncludeGuard(PipelineTask):
         return output, True
 
     def make_include_guard(self, config_file: Config, filename: Path) -> str:
-        """Returns properly formatted include guard based on repository root and
+        """
+        Returns properly formatted include guard based on repository root and
         filename.
 
-        Keyword arguments:
-        config_file -- Config object
-        filename -- filename
+        Args:
+            config_file: Config object.
+            filename: Filename.
         """
         repo_root = super().get_repo_root()
 
