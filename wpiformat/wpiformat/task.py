@@ -10,10 +10,11 @@ from wpiformat.config import Config
 class Task(metaclass=ABCMeta):
     @staticmethod
     def get_linesep(lines: str) -> str:
-        """Returns string containing autodetected line separator for file.
+        """
+        Returns string containing autodetected line separator for file.
 
-        Keyword arguments:
-        lines -- file contents
+        Args:
+            lines: File contents.
         """
         # Find potential line separator
         pos = lines.find("\n")
@@ -28,9 +29,11 @@ class Task(metaclass=ABCMeta):
 
     @staticmethod
     def get_repo_root() -> Path:
-        """Returns the Git repository root as an absolute path.
+        """
+        Returns the Git repository root as an absolute path.
 
-        Raises OSError if no repository root was found.
+        Raises:
+            OSError: If no repository root was found.
         """
         if output := subprocess.check_output(
             ["git", "rev-parse", "--show-toplevel"], encoding="utf-8"
@@ -41,13 +44,14 @@ class Task(metaclass=ABCMeta):
 
     @staticmethod
     def should_process_file(config_file: Config, filename: Path) -> bool:
-        """Returns true if file should be processed by this task.
-
-        Keyword arguments:
-        config_file -- Config object
-        filename -- filename
+        """
+        Returns true if file should be processed by this task.
 
         Process any file by default.
+
+        Args:
+            config_file: Config object.
+            filename: Filename.
         """
         return True
 
@@ -57,17 +61,19 @@ class PipelineTask(Task):
     def run_pipeline(
         self, config_file: Config, filename: Path, lines: str
     ) -> tuple[str, bool]:
-        """Performs task on file with given lines.
+        """
+        Performs task on file with given lines.
 
         This function is for processing the file in a pipeline of tasks.
 
-        Keyword arguments:
-        config_file -- Config object
-        filename -- filename
-        lines -- file contents
+        Args:
+            config_file: Config object.
+            filename: Filename.
+            lines: File contents.
 
-        Returns tuple containing processed lines and whether task succeeded in
-        processing the file.
+        Returns:
+            Tuple containing processed lines and whether task succeeded in
+            processing the file.
         """
         return "", True
 
@@ -76,16 +82,18 @@ class BatchTask(Task):
     @staticmethod
     @abstractmethod
     def run_batch(config_file: Config, filenames: list[Path]) -> bool:
-        """Performs task on list of files.
+        """
+        Performs task on list of files.
 
         This function is for processing multiple files in one task to reduce
         overhead.
 
-        Keyword arguments:
-        config_file -- Config object
-        filenames -- list of filenames
+        Args:
+            config_file: Config object.
+            filenames: List of filenames.
 
-        Returns True if task succeeded in processing the files.
+        Returns:
+            True if task succeeded in processing the files.
         """
         return True
 
@@ -93,14 +101,16 @@ class BatchTask(Task):
 class StandaloneTask(Task):
     @abstractmethod
     def run_standalone(self, config_file: Config, filename: Path) -> bool:
-        """Performs task on a file.
+        """
+        Performs task on a file.
 
         This function is for processing the file on its own.
 
-        Keyword arguments:
-        config_file -- Config object
-        filename -- filename
+        Args:
+            config_file: Config object.
+            filename: Filename.
 
-        Returns True if task succeeded in processing the file.
+        Returns:
+            True if task succeeded in processing the file.
         """
         return True
