@@ -26,10 +26,11 @@ from wpiformat.whitespace import Whitespace
 
 
 def _filter_for_unignored_files(filenames: list[Path]) -> list[Path]:
-    """Returns list of files not in .gitignore.
+    """
+    Returns list of files not in .gitignore.
 
-    Keyword arguments:
-    filenames -- list of filenames to filter
+    Args:
+        filenames: List of filenames to filter.
     """
     # "git check-ignore" misbehaves when the names are separated by "\r\n" on
     # Windows, so os.linesep isn't used here.
@@ -64,12 +65,13 @@ def _filter_for_unignored_files(filenames: list[Path]) -> list[Path]:
 
 
 def _proc_init(task_pipeline_copy, verbose1_copy, verbose2_copy):
-    """Common initialization for process pool worker.
+    """
+    Common initialization for process pool worker.
 
-    Keyword arguments:
-    task_pipeline_copy -- task pipeline
-    verbose1_copy -- verbose1 flag
-    verbose2_copy -- verbose2 flag
+    Args:
+        task_pipeline_copy: Task pipeline.
+        verbose1_copy: verbose1 flag.
+        verbose2_copy: verbose2 flag.
     """
     global task_pipeline
     global verbose1
@@ -83,13 +85,14 @@ def _proc_init(task_pipeline_copy, verbose1_copy, verbose2_copy):
 
 
 def _proc_pipeline(filename: Path) -> bool:
-    """Runs the contents of each file through the task pipeline.
+    """
+    Runs the contents of each file through the task pipeline.
 
     If the contents were modified at any point, the result is written back out
     to the file.
 
-    Keyword arguments:
-    filename -- filename
+    Args:
+        filename: Filename.
     """
     # TODO: Remove handling for deprecated .styleguide file
     config_file = Config(filename.parent, Path(".wpiformat"))
@@ -129,10 +132,11 @@ def _proc_pipeline(filename: Path) -> bool:
 
 
 def _proc_standalone(filename: Path) -> bool:
-    """Runs each task on each file.
+    """
+    Runs each task on each file.
 
-    Keyword arguments:
-    filename -- filename
+    Args:
+        filename: Filename.
     """
     # TODO: Remove handling for deprecated .styleguide file
     config_file = Config(filename.parent, Path(".wpiformat"))
@@ -174,15 +178,17 @@ def _chunks(iterable: list[Path], max_len: int) -> Generator[list[Path], None, N
 
 
 def _proc_batch(filenames: list[Path]) -> bool:
-    """Runs each task in the pipeline on batches of files.
+    """
+    Runs each task in the pipeline on batches of files.
 
     These tasks read and write to the files directly. They are given a list of
     all files at once to avoid spawning too many subprocesses.
 
-    Keyword arguments:
-    filenames -- list of filenames
+    Args:
+        filenames: List of filenames.
 
-    Returns true if all tasks succeeded.
+    Returns:
+        True if all tasks succeeded.
     """
     all_success = True
 
@@ -215,14 +221,16 @@ def _proc_batch(filenames: list[Path]) -> bool:
 
 
 def _run_pipeline(task_pipeline, args, filenames: list[Path]) -> bool:
-    """Spawns process pool for _proc_pipeline().
+    """
+    Spawns process pool for _proc_pipeline().
 
-    Keyword arguments:
-    task_pipeline -- task pipeline
-    args -- command line arguments from argparse
-    filenames -- list of filenames to process
+    Args:
+        task_pipeline: Task pipeline.
+        args: Command line arguments from argparse.
+        filenames: List of filenames to process.
 
-    Returns true if all tasks succeeded.
+    Returns:
+        True if all tasks succeeded.
     """
     init_args = (task_pipeline, args.verbose1, args.verbose2)
 
@@ -244,14 +252,16 @@ def _run_pipeline(task_pipeline, args, filenames: list[Path]) -> bool:
 
 
 def _run_batch(task_pipeline, args, filename_batches: list[list[Path]]) -> bool:
-    """Spawns process pool for _proc_batch().
+    """
+    Spawns process pool for _proc_batch().
 
-    Keyword arguments:
-    task_pipeline -- task pipeline
-    args -- command line arguments from argparse
-    filename_batches -- list of batches of filenames to process
+    Args:
+        task_pipeline: Task pipeline.
+        args: Command line arguments from argparse.
+        filename_batches: List of batches of filenames to process.
 
-    Returns true if all tasks succeeded.
+    Returns:
+        True if all tasks succeeded.
     """
     init_args = (task_pipeline, args.verbose1, args.verbose2)
 
@@ -273,14 +283,16 @@ def _run_batch(task_pipeline, args, filename_batches: list[list[Path]]) -> bool:
 
 
 def _run_standalone(task_pipeline, args, filenames: list[Path]) -> bool:
-    """Spawns process pool for _proc_standalone().
+    """
+    Spawns process pool for _proc_standalone().
 
-    Keyword arguments:
-    task_pipeline -- task pipeline
-    args -- command line arguments from argparse
-    filenames -- list of filenames to process
+    Args:
+        task_pipeline: Task pipeline.
+        args: Command line arguments from argparse.
+        filenames: List of filenames to process.
 
-    Returns true if all tasks succeeded.
+    Returns:
+        True if all tasks succeeded.
     """
     init_args = (task_pipeline, args.verbose1, args.verbose2)
 

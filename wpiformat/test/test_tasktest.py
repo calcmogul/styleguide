@@ -34,12 +34,12 @@ def run_and_check_file(
     Runs the task on the input file contents, then compares the resulting output
     against the expected output file contents.
 
-    Keyword Arguments:
-    task -- Task instance to test
-    filename -- filename
-    input_contents -- input file contents
-    expected_output_contents -- expected output file contents
-    expected_success -- whether run is expected to succeed
+    Args:
+        task: Task instance to test.
+        filename: Filename.
+        input_contents: Input file contents.
+        expected_output_contents: Expected output file contents.
+        expected_success: Whether run is expected to succeed.
     """
     input_contents = input_contents.replace("\n", os.linesep)
     expected_output_contents = expected_output_contents.replace("\n", os.linesep)
@@ -67,12 +67,12 @@ def run_and_check_stdout(
     Runs the task on the input file contents, then compares the resulting
     output against the expected stdout contents.
 
-    Keyword Arguments:
-    task -- Task instance to test
-    filename -- filename
-    input_contents -- input file contents
-    expected_output_contents -- expected output file contents
-    expected_success -- whether run is expected to succeed
+    Args:
+        task: Task instance to test.
+        filename: Filename.
+        input_contents: Input file contents.
+        expected_output_contents: Expected output file contents.
+        expected_success: Whether run is expected to succeed.
     """
     config_file = Config(Path.cwd(), Path(".wpiformat"))
 

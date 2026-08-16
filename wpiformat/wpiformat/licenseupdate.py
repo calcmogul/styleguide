@@ -27,16 +27,17 @@ class LicenseUpdate(PipelineTask):
     def __try_regex(
         self, lines: str, last_year: str, license_template: list[str]
     ) -> tuple[bool, str, str]:
-        """Try finding license with regex of license template.
+        """
+        Try finding license with regex of license template.
 
-        Keyword arguments:
-        lines -- lines of file
-        last_year -- last year in copyright range
-        license_template -- license template
+        Args:
+            lines: Lines of file.
+            last_year: Last year in copyright range.
+            license_template: License template.
 
         Returns:
-        Tuple of whether license was found, first year in copyright range, and
-        file contents after license.
+            Tuple of whether license was found, first year in copyright range,
+            and file contents after license.
         """
         linesep = super().get_linesep(lines)
 
@@ -69,15 +70,16 @@ class LicenseUpdate(PipelineTask):
             return False, first_year, lines
 
     def __try_string_search(self, lines: str, last_year: str) -> tuple[bool, str, str]:
-        """Try finding license with string search.
+        """
+        Try finding license with string search.
 
-        Keyword arguments:
-        lines -- lines of file
-        last_year -- last year in copyright range
+        Args:
+            lines: Lines of file.
+            last_year: Last year in copyright range.
 
         Returns:
-        Tuple of whether license was found, first year in copyright range, and
-        file contents after license.
+            Tuple of whether license was found, first year in copyright range,
+            and file contents after license.
         """
         linesep = super().get_linesep(lines)
 

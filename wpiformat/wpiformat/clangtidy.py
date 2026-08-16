@@ -16,11 +16,12 @@ from wpiformat.task import StandaloneTask
 
 class ClangTidy(StandaloneTask):
     def __init__(self, compile_commands: str, extra_args: list[str]):
-        """Constructor for ClangTidy task.
+        """
+        Constructor for ClangTidy task.
 
-        Keyword arguments:
-        compile_commands -- directory containing compile_commands.json
-        extra_args -- list of extra arguments to clang-tidy
+        Args:
+            compile_commands: Directory containing compile_commands.json.
+            extra_args: List of extra arguments to clang-tidy.
         """
         super().__init__()
 

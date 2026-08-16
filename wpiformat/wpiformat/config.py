@@ -10,11 +10,12 @@ class Config:
     __config_cache: ClassVar[dict[Path, list[str]]] = {}
 
     def __init__(self, directory: Path, filename: Path):
-        """Constructor for Config object.
+        """
+        Constructor for Config object.
 
-        Keyword arguments:
-        directory -- directory in which to start search for file
-        filename -- filename
+        Args:
+            directory: Directory in which to start search for file.
+            filename: Filename.
         """
         self.__config_dict = self.__parse_config_file(directory, filename)
         self.__c_header_include_regex = self.regex("cHeaderFileInclude")
@@ -25,17 +26,21 @@ class Config:
 
     @staticmethod
     def read_file(directory: Path, filename: Path) -> tuple[Path, list[str]]:
-        """Find file and return contents.
+        """
+        Find file and return contents.
 
         Checks current directory for file. If one doesn't exist, try all parent
         directories as well.
 
-        Keyword arguments:
-        directory -- current directory from which to start search
-        filename -- filename
+        Args:
+            directory: Current directory from which to start search.
+            filename: Filename.
 
-        Returns tuple of filename and list containing file contents or raises
-        OSError if no file was found.
+        Raises:
+            OSError: If no file was found.
+
+        Returns:
+            Tuple of filename and list containing file contents.
         """
         for parent in (directory / filename).parents:
             filepath = parent / filename
@@ -62,10 +67,11 @@ class Config:
         raise OSError
 
     def group(self, group_name: str) -> list[str]:
-        """Returns value from config dictionary given key string.
+        """
+        Returns value from config dictionary given key string.
 
-        Keyword arguments:
-        group_name -- config group name
+        Args:
+            group_name: Config group name.
         """
         if not self.__config_dict:
             return []
@@ -76,12 +82,14 @@ class Config:
             return []
 
     def regex(self, *args) -> re.Pattern:
-        """Converts contents of group from config file into regex.
+        """
+        Converts contents of group from config file into regex.
 
-        Keyword arguments:
-        *args -- argument list of groups. They are all joined by "|".
+        Args:
+            *args: Argument list of groups. They are all joined by "|".
 
-        Returns compiled regex.
+        Returns:
+            Compiled regex.
         """
         group_contents = []
 
@@ -99,43 +107,48 @@ class Config:
             return re.compile(r"|".join(group_contents))
 
     def is_c_file(self, filename: Path) -> bool:
-        """Returns True if file is either C header or C source file.
+        """
+        Returns True if file is either C header or C source file.
 
-        Keyword arguments:
-        filename -- filename
+        Args:
+            filename: Filename.
         """
         return self.is_c_header_file(filename) or self.is_c_src_file(filename)
 
     def is_c_header_file(self, filename: Path) -> bool:
-        """Returns True if file is C header file.
+        """
+        Returns True if file is C header file.
 
-        Keyword arguments:
-        filename -- filename
+        Args:
+            filename: Filename.
         """
         return self.__c_header_include_regex.search(filename.as_posix()) is not None
 
     @staticmethod
     def is_c_src_file(filename: Path) -> bool:
-        """Returns True if file is C source file.
+        """
+        Returns True if file is C source file.
 
-        Keyword arguments:
-        filename -- filename
+        Args:
+            filename: Filename.
         """
         return filename.suffix == ".c"
 
     def is_cpp_file(self, filename: Path) -> bool:
-        """Returns True if file is either C++ header or C++ source file.
+        """
+        Returns True if file is either C++ header or C++ source file.
 
-        Keyword arguments:
-        filename -- filename
+        Args:
+            filename: Filename.
         """
         return self.is_cpp_header_file(filename) or self.is_cpp_src_file(filename)
 
     def is_cpp_header_file(self, filename: Path) -> bool:
-        """Returns True if file is C++ header file.
+        """
+        Returns True if file is C++ header file.
 
-        Keyword arguments:
-        filename -- filename
+        Args:
+            filename: Filename.
         """
         return (
             filename.suffix == ".hpp"
@@ -143,10 +156,11 @@ class Config:
         )
 
     def is_cpp_src_file(self, filename: Path) -> bool:
-        """Returns True if file is C++ source file.
+        """
+        Returns True if file is C++ source file.
 
-        Keyword arguments:
-        filename -- filename
+        Args:
+            filename: Filename.
         """
         return (
             filename.suffix == ".cpp"
@@ -154,42 +168,47 @@ class Config:
         )
 
     def is_header_file(self, filename: Path) -> bool:
-        """Returns True if file is either C or C++ header file.
+        """
+        Returns True if file is either C or C++ header file.
 
-        Keyword arguments:
-        filename -- filename
+        Args:
+            filename: Filename.
         """
         return self.is_c_header_file(filename) or self.is_cpp_header_file(filename)
 
     def is_generated_file(self, filename: Path) -> bool:
-        """Returns True if file is generated (generated files are skipped).
+        """
+        Returns True if file is generated (generated files are skipped).
 
-        Keyword arguments:
-        filename -- filename
+        Args:
+            filename: Filename.
         """
         return self.__generated_exclude_regex.search(filename.as_posix()) is not None
 
     def is_modifiable_file(self, filename: Path) -> bool:
-        """Returns True if file is modifiable but should be skipped.
+        """
+        Returns True if file is modifiable but should be skipped.
 
-        Keyword arguments:
-        filename -- filename
+        Args:
+            filename: Filename.
         """
         return self.__modifiable_exclude_regex.search(filename.as_posix()) is not None
 
     def __parse_config_file(
         self, directory: Path, filename: Path
     ) -> dict[str, list[str]]:
-        """Parse values from config file.
+        """
+        Parse values from config file.
 
         Checks current directory for config file. If one doesn't exist, try all
         parent directories as well.
 
-        Keyword arguments:
-        directory -- current directory from which to start search
-        filename -- config filename
+        Args:
+            directory: Current directory from which to start search.
+            filename: Config filename.
 
-        Returns dictionary of groups (group name -> list of values).
+        Returns:
+            Dictionary of groups (group name -> list of values).
         """
         in_group = False
         config_group = {}
